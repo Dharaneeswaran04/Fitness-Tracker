@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AI Workout Planner</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Chatbot icon container */
+        #chatbot {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+            animation: bounce 2s ease-in-out infinite, slideIn 1s ease-out; /* Added bounce animation */
+        }
+
+        /* Chatbot image */
+        #chatbot img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 0.3s ease; /* Smooth transition for the image */
+            border: 3px solid #fff; /* Adding border to highlight the image */
+        }
+
+        /* Speech bubble for text that appears on hover */
+        #chatbot span {
+            display: none;
+            position: absolute;
+            left: 90px;
+            bottom: 15px;
+            background-color: #333;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            white-space: nowrap;
+            z-index: 1000;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            animation: pulseText 1.5s ease-out infinite;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        /* Show text bubble on hover */
+        #chatbot:hover span {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+            animation: none; /* Remove animation while hovering */
+        }
+
+        /* Hover effect for the chatbot icon */
+        #chatbot:hover {
+            transform: scale(1.2); /* Slightly enlarge on hover */
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5); /* Bigger shadow on hover */
+        }
+
+        /* Bouncing animation for the chatbot */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0); /* Normal position */
+            }
+            50% {
+                transform: translateY(-20px); /* Bounce up */
+            }
+        }
+
+        /* Bouncing animation on page load */
+        @keyframes slideIn {
+            from {
+                transform: translateY(300px); /* Start from bottom */
+                opacity: 0;
+            }
+            to {
+                transform: translateY(500px); /* Set to normal position */
+                opacity: 1;
+            }
+        }
+
+        /* Pulse animation for the text */
+        @keyframes pulseText {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+        }
+
+        /* Animation for the chatbot on click */
+        #chatbot.new-message {
+            animation: pulse 0.8s ease-in-out infinite; /* Make it pulse for attention */
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <main>
+        <section class="user-input">
+            <h2>Get Your Custom Workout Plan</h2>
+            <form id="workout-form">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <label for="goal">Fitness Goal:</label>
+                <select id="goal" name="goal" required>
+                    <option value="weight-loss">Weight Loss</option>
+                    <option value="muscle-gain">Muscle Gain</option>
+                    <option value="endurance">Endurance</option>
+                </select>
+
+                <button type="submit">Generate Plan</button>
+            </form>
+        </section>
+
+        <section id="workout-plan" class="hidden">
+            <h2>Your Workout Plan</h2>
+            <div id="plan-details">
+                <!-- Workout plan will be displayed here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Chatbot button with image and bubble -->
+    <div id="chatbot">
+        <img src="kratos-angry-eyes-god-of-war-4-6y.jpg" alt="chatbot icon">
+        <span>Need help, Spartan?</span>
+    </div>
+
+    <!-- Link to chatbot page -->
+    <script>
+        document.getElementById('chatbot').addEventListener('click', function () {
+            window.location.href = "neww.html";
+        });
+
+        // Simulating the "new message" indicator after some time
+        setTimeout(function() {
+            document.getElementById('chatbot').classList.add('new-message');
+            document.getElementById('chatbot').style.setProperty('display', 'block');
+            document.getElementById('chatbot').querySelector('span').textContent = "SPARTAN!, Need help!";
+            document.getElementById('chatbot').querySelector('span').style.display = "block";
+        }, 3000);
+    </script>
+
+    <script src="scriptz.js"></script>
+</body>
+</html>

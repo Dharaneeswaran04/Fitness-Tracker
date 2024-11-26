@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Chatbot</title>
+    <style>
+        body {
+            font-family: gow;
+            background-image: url('https://i.ibb.co/G9nBrbR/kratos.jpg');
+            background-size: cover; /* Ensures the image covers the entire element */
+            margin-right: 28%;
+            
+            padding: 30px;
+            
+    
+
+        }
+        @font-face {
+    font-family: 'gow'; /* Replace with your desired font name */
+    src: url('fonts/GODOFWAR.TTF') format('truetype'); /* Adjust the path */
+    font-weight: normal; /* You can adjust this based on your font style */
+    font-style: normal; /* You can adjust this based on your font style */
+}
+
+        .chat-container {
+            background: rgba(255, 255, 255, 0);
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgb(190, 158, 158);
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        .chat-box {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid rgb(10, 10, 10);
+            box-shadow: 0 1px 4px rgb(175, 157, 157);
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .chat-message {
+            margin: 5px 0;
+        }
+
+        .user {
+            color: rgb(151, 189, 189);
+            text-align: right;
+        }
+
+        .assistant {
+            color: red;
+            text-align: left;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 80px);
+            padding: 10px;
+            border: 1px solid ghostwhite;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: darkgoldenrod;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: goldenrod
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h1 style="color: silver;">Fitness Assistant Chatbot</h1>
+        <div id="chat-box" class="chat-box"></div>
+        <input type="text" id="user-input" placeholder="Ask me anything about workouts...">
+        <button id="send-button">Send</button>
+    </div>
+
+    <script>
+        // Dictionary of keywords and responses
+        const responses = {
+            "workout": "You're about to crush your workout! 💪 What kind of workout are you looking for today? Whether it's a full-body routine, cardio, strength training, or flexibility, let's get started and make some progress!",
+            "full-body workout": "A full-body workout is a powerful way to engage multiple muscle groups. This can include squats, push-ups, lunges, and a plank. Focus on quality over quantity, and push yourself with 3 sets of 12 reps for each exercise. You're building strength with every rep!",
+            "cardio": "Cardio is the heart-pumping, calorie-burning workout that helps improve your stamina and endurance! 🏃‍♂️ Whether you prefer running, cycling, or swimming, start with a 20-30 minute session. Challenge yourself, and feel the energy flow through you!",
+            "strength training": "Strength training isn’t just about muscles—it’s about mental toughness! 💪 Start with compound exercises like squats, deadlifts, and bench presses. Build up your strength with proper form, and gradually increase your weights to get stronger every week. You've got this!",
+            "yoga": "Yoga is not only for flexibility but also for mental clarity and balance. 🧘‍♀️ Start with some basic poses like Downward Dog and Warrior. Focus on your breath, and embrace the flow. A 10-minute yoga session will leave you feeling refreshed and grounded!",
+            "abs workout": "Let's sculpt that core and feel stronger from the inside out! 💥 Try 3 sets of crunches, leg raises, and planks. A strong core means better balance, posture, and overall power. Keep going, your abs are shaping up with every rep!",
+            "leg day": "Leg day is all about building that foundation of power and strength in your lower body! 🚴‍♂️ Focus on squats, lunges, and calf raises. Legs are the muscles that carry you through life—make them strong and unstoppable. Push through, you've got this!",
+            "warm-up": "Warming up is like preparing your car for a race—it’s essential! 🚗 Start with 5-10 minutes of light jogging, brisk walking, or dynamic stretching. Get your heart rate up, and get your body ready to crush the workout ahead. You’re warming up for greatness!",
+            "cool down": "The cool-down is just as important as the workout itself! 🌟 After pushing hard, let your body recover. Stretch those muscles, reduce any tension, and take a few deep breaths. Your muscles will thank you tomorrow. You've earned this moment of relaxation!",
+            "nutrition": "Fuel your body like the champion you are! 🍎 Nutrition is key to achieving your fitness goals. Whether it’s a pre-workout snack or post-workout recovery meal, make sure you’re getting the right nutrients to support your progress. What are you looking to fuel up with today?",
+            "protein": "Protein is the building block of muscle recovery! 🥩 Whether you're into chicken, fish, eggs, or plant-based options like tofu and lentils, get your protein in and your muscles will thank you. Need help planning your meals for muscle growth?",
+            "rest day": "Rest is just as important as training! 💤 Your muscles need time to repair and grow stronger. Use your rest day to focus on stretching, mobility, and even some meditation. Your body is recharging to come back stronger than ever!",
+            "weight loss": "Weight loss is a journey, not a race! 🌱 Focus on a mix of cardio and strength training to burn calories and build muscle. Make every workout count, and don’t forget—it's the small, consistent steps that lead to big results. Ready to start your journey?",
+            "muscle gain": "You’re in it to build strength and muscle, and that takes dedication! 💪 Strength training with progressive overload will help you increase muscle mass. Each rep and set brings you one step closer to your goal. Let's build those muscles!",
+            "calories burned": "Curious about how many calories you burned? 🔥 Let me know the workout type and duration, and we can calculate it together! Remember, every workout burns more calories than sitting still—so let's get moving and see those numbers climb!",
+            "workout plan": "Let’s create a personalized workout plan just for you! Whether you want to lose weight, gain muscle, or increase endurance, I’ll help you map it out. What’s your main goal? Let’s get started on this fitness adventure together!",
+            "creator": "I, Dharaneesh’s personal fitness assistant, am here to guide you toward your fitness goals with every rep, set, and step. Let’s unleash your full potential together!",
+            "squats": "Squats are the king of lower-body exercises! 💪 Stand with your feet shoulder-width apart, and lower your hips as if you’re sitting down. Keep your chest up and your knees behind your toes. Squats strengthen your quads, glutes, and hamstrings, and they help improve balance. Try 3 sets of 12 reps, and feel the burn!",
+            "pushups": "Push-ups are a great exercise for your chest, shoulders, and triceps. 💥 Start in a plank position, hands a bit wider than shoulder-width apart. Lower your chest to the ground, and push back up. Your upper body will become stronger with every push-up. Aim for 3 sets of 10-15 reps and watch your upper body transform!",
+            "lunges": "Lunges are perfect for strengthening your legs and glutes! 🚶‍♂️ Step forward with one leg, lower your hips until both knees are at 90-degree angles, and push back to the starting position. Alternating legs, do 3 sets of 12 reps. Keep your chest up, and feel the strength in your legs grow with every rep!",
+            "plank": "Planks are one of the best exercises for your core! 🧘‍♂️ Start in a push-up position, but keep your arms straight and hold your body in a straight line. Engage your abs, and hold as long as possible. Hold for 30-60 seconds and repeat for 3 sets. Strengthen that core and improve your stability!",
+            "deadlifts": "Deadlifts are a powerhouse move for your entire body. 💥 Start with your feet hip-width apart, grip the barbell, and lift it up while keeping your back straight. This exercise targets your glutes, hamstrings, and lower back. Build up gradually with 3 sets of 8-10 reps. You’ve got the strength to lift heavy!",
+            "bicep curls": "Bicep curls will give you those strong, defined arms. 💪 Grab a dumbbell in each hand, keep your arms extended, and curl the weights up toward your shoulders. Lower slowly and repeat for 3 sets of 12-15 reps. Your arms are going to look amazing with these!",
+            "jumping jacks": "Jumping jacks are a great way to get your heart pumping and burn some calories! 🔥 Stand with your feet together, then jump and spread your legs while raising your arms above your head. Do 3 sets of 30 seconds for a fun and effective cardio blast!",
+            "burpees": "Burpees are an excellent exercise that combines cardio and strength. 🏋️‍♂️ Start standing, then squat down, jump back into a plank, do a push-up, and jump back up. Repeat this for 3 sets of 10 reps. You'll feel energized and accomplished with every burpee!",
+            "diet": "Follow a balanced multivitamin diet with all nutrients and protiens",
+            "hi": "Hello spartan, how can i help you",
+            "hello": "Hi spartan, how can i help you",
+            "warmup": "Warm up with **jumping jacks**, **high knees**, and **light jogging** to boost your heart rate. Add **dynamic stretches** like **leg swings** and **lunges with a twist** to loosen up. Include **bodyweight squats** and **arm circles** for full-body activation. Finish with **wrist and ankle rolls** for joint mobility."
+            
+        };
+
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        sendButton.addEventListener('click', () => {
+            const input = userInput.value.trim().toLowerCase();
+            userInput.value = '';
+            displayMessage(input, 'user');
+            getResponse(input);
+        });
+
+        userInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                sendButton.click();
+            }
+        });
+
+        function displayMessage(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}`;
+            messageDiv.innerText = message;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to the bottom
+        }
+
+        function getResponse(input) {
+            let response = "I'm sorry, I didn't understand that. Can you ask something else related to fitness?";
+            for (const keyword in responses) {
+                if (input.includes(keyword)) {
+                    response = responses[keyword];
+                    break; // Stop checking after the first match
+                }
+            }
+            displayMessage(response, 'assistant');
+        }
+    </script>
+</body>
+</html>

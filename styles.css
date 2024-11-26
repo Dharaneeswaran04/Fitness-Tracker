@@ -1,0 +1,158 @@
+html, body {
+    height: 100%; /* Ensure both html and body take full height of the viewport */
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'gow';
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; /* Ensure body height is at least 100% of the viewport height */
+    background-image: url('https://i.ibb.co/GxnTpbY/maxresdefault.jpg'); /* Replace with the path to your image */
+    background-size: cover; /* Make sure the image covers the entire background */
+    background-position: top center; /* Center the background image at the top */
+    background-repeat: no-repeat; /* Ensure the image does not repeat */
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    justify-content: space-between; /* Ensure content remains aligned vertically */
+}
+
+@font-face {
+    font-family: 'gow'; /* Replace with your desired font name */
+    src: url('fonts/GODOFWAR.TTF') format('truetype'); /* Adjust the path */
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1 {
+    margin: 0;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    color: rgb(211, 64, 27);
+    margin: 2rem;
+    text-align: center;
+     /* Adjusts the content to appear below the image */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin-left: 40%;
+    color: rgb(221, 215, 214);
+    margin-bottom: 10%;
+}
+
+form label {
+    margin-top: 1rem;
+}
+
+form input, form select, form textarea {
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    margin-left: 10%;
+    color: red;
+    background-color: rgba(242, 238, 234, 0);
+    text-align: center;
+    font-style: italic;
+}
+
+button {
+    margin-top: 20px; /* Space above the button */
+    margin-left: 22%;
+    padding: 5px 20px; /* Padding for button */
+    font-size: 20px; /* Font size for button text */
+    color: rgb(15, 13, 13); /* Text color */
+    background-color: rgba(172, 119, 55, 0.604); /* Button background color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    font-family: 'gow';
+    cursor: pointer; /* Pointer cursor on hover */
+    width: 70%;
+    align-items: center;
+}
+
+button:hover {
+    background-color: rgba(183, 32, 32, 0.47);
+}
+
+.hidden {
+    display: none;
+}
+
+#workout-plan {
+    background-color: gold;
+    padding: 2rem;
+    margin-top: 50vh;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgb(211, 64, 27);
+    color: rgb(236, 34, 31);
+}
+
+#workout-plan {
+    background-color: gold;
+    padding: 20px;
+    margin-top: 48vh;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'gow';
+}
+
+#plan-details h3 {
+    color: #ae1717;  /* Darker red for headers */
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+#plan-details p {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+#plan-details ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    color: #000;
+}
+
+#plan-details ul li {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+#plan-details strong {
+    color: #000;
+    font-weight: bold;
+}
+
+#plan-details {
+    line-height: 1.5;
+}
+
+
+#chatbot-link{
+   
+    margin-left: 41%;
+
+}
+.btn {
+    display: inline-block; /* Allows the link to behave like a button */
+    padding: 10px 20px; /* Adds padding around the text */
+    font-size: 16px; /* Increases font size */
+    color: rgb(186, 66, 66); /* Text color */
+    background-color:#A9A9A9; /* Background color */
+    border: none; /* Removes border */
+    border-radius: 5px; /* Rounds the corners */
+    text-align: center; /* Centers the text */
+    text-decoration: none; /* Removes the underline */
+    transition: background-color 0.3s; /* Smooth transition effect */
+}
+
+.btn:hover {
+    background-color:  #1B1B1B;/* Darker shade on hover */
+}
